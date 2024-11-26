@@ -126,9 +126,12 @@ class TDMPC2Config:
     state_encoder_hidden_dim: int = 256
     latent_dim: int = 512
     q_ensemble_size: int = 5
+    num_enc_layers: int = 2
     mlp_dim: int = 512
     # Reinforcement learning.
     discount: float = 0.9
+    simnorm_dim: int = 8
+    dropout: float = 0.01
 
     # actor
     log_std_min: float = -10
@@ -157,10 +160,10 @@ class TDMPC2Config:
     consistency_coeff: float = 20.0
     entropy_coef: float = 1e-4
     temporal_decay_coeff: float = 0.5
-    # Target model. NOTE (michel_aractingi) this is equivelant to 
-    # 1 - target_model_momentum of our TD-MPC1 implementation because 
+    # Target model. NOTE (michel_aractingi) this is equivelant to
+    # 1 - target_model_momentum of our TD-MPC1 implementation because
     # of the use of `torch.lerp`
-    target_model_momentum: float = 0.01 
+    target_model_momentum: float = 0.01
 
     def __post_init__(self):
         """Input validation (not exhaustive)."""
