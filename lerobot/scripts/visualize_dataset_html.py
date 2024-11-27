@@ -88,7 +88,7 @@ def run_server(
     port: str,
     static_folder: Path,
     template_folder: Path,
-    has_policy = False,
+    has_policy=False,
 ):
     app = Flask(__name__, static_folder=static_folder.resolve(), template_folder=template_folder.resolve())
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # specifying not to cache
@@ -131,7 +131,7 @@ def run_server(
             dataset_info=dataset_info,
             videos_info=videos_info,
             ep_csv_url=ep_csv_url,
-            has_policy = has_policy,
+            has_policy=has_policy,
         )
 
     app.run(host=host, port=port)
@@ -404,7 +404,7 @@ def main():
     args = parser.parse_args()
     kwargs = vars(args)
     repo_id = kwargs.pop("repo_id")
-    # root = kwargs.pop("root")
+    kwargs.pop("root")
     dataset = LeRobotDataset(repo_id)
     visualize_dataset_html(dataset, **kwargs)
 
