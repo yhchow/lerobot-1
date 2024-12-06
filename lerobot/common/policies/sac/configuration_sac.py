@@ -15,16 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F  # noqa: N812
-from huggingface_hub import PyTorchModelHubMixin
+from dataclasses import dataclass, field
 
-class SACPolicy(
-    nn.Module,
-    PyTorchModelHubMixin,
-    library_name="lerobot",
-    repo_url="https://github.com/huggingface/lerobot",
-    tags=["robotics", "SAC"],
-):
-    pass
+
+@dataclass
+class SACConfig:
+    discount = 0.99
