@@ -79,7 +79,7 @@ def make_maniskill_env(cfg: DictConfig, n_envs: int | None = None) -> gym.vector
     )
     # cfg.env_cfg.control_mode = cfg.eval_env_cfg.control_mode = env.control_mode
     env = ManiSkillVectorEnv(env, ignore_terminations=True)
-    env = PixelWrapper(cfg, env, n_envs)
+    # env = PixelWrapper(cfg, env, n_envs)
     env._max_episode_steps = env.max_episode_steps = 50  # gym_utils.find_max_episode_steps_value(env)
     env.unwrapped.metadata["render_fps"] = 20
 
