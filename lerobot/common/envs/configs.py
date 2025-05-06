@@ -15,11 +15,12 @@
 import abc
 from dataclasses import dataclass, field
 from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import draccus
 
 from lerobot.common.constants import ACTION, OBS_ENV, OBS_IMAGE, OBS_IMAGES, OBS_ROBOT
-from lerobot.common.robot_devices.robots.configs import RobotConfig
+from lerobot.common.robots import RobotConfig
 from lerobot.configs.types import FeatureType, PolicyFeature
 
 
@@ -34,7 +35,8 @@ class EnvConfig(draccus.ChoiceRegistry, abc.ABC):
     def type(self) -> str:
         return self.get_choice_name(self.__class__)
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def gym_kwargs(self) -> dict:
         raise NotImplementedError()
 
