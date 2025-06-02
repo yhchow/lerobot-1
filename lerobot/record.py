@@ -57,6 +57,7 @@ from lerobot.common.robots import (  # noqa: F401
     koch_follower,
     make_robot_from_config,
     so100_follower,
+    so101_follower,
 )
 from lerobot.common.teleoperators import (  # noqa: F401
     Teleoperator,
@@ -80,7 +81,7 @@ from lerobot.common.utils.visualization_utils import _init_rerun
 from lerobot.configs import parser
 from lerobot.configs.policies import PreTrainedConfig
 
-from .common.teleoperators import koch_leader, so100_leader  # noqa: F401
+from .common.teleoperators import koch_leader, so100_leader, so101_leader  # noqa: F401
 
 
 @dataclass
@@ -130,8 +131,6 @@ class RecordConfig:
     teleop: TeleoperatorConfig | None = None
     # Whether to control the robot with a policy
     policy: PreTrainedConfig | None = None
-    # Number of seconds before starting data collection. It allows the robot devices to warmup and synchronize.
-    warmup_time_s: int | float = 10
     # Display all cameras on screen
     display_data: bool = False
     # Use vocal synthesis to read events.
@@ -186,9 +185,10 @@ def record_loop(
             observation_frame = build_dataset_frame(dataset.features, observation, prefix="observation")
 
         if policy is not None:
-            action = predict_action(
+            action_values = predict_action(
                 observation_frame, policy, get_safe_torch_device(policy.config.device), policy.config.use_amp
             )
+            action = {key: action_values[i] for i, key in enumerate(robot.action_features)}
         else:
             action = teleop.get_action()
 
@@ -322,7 +322,6 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
                 single_task=cfg.dataset.single_task,
                 display_data=cfg.display_data,
             )
-            # reset_environment(robot, events, cfg.dataset.reset_time_s, cfg.dataset.fps)
 
         if events["rerecord_episode"]:
             log_say("Re-record episode", cfg.play_sounds)
