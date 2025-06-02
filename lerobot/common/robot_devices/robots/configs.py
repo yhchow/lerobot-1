@@ -546,7 +546,7 @@ class So100RobotConfig(ManipulatorRobotConfig):
                 height=1080,
             ),
             "pi": OpenCVCameraConfig(
-                camera_index="http://<raspberry_pi_ip>:8080/?action=stream",
+                camera_index="http://192.168.68.107:8080/video_feed",
                 fps=30,
                 width=1920,
                 height=1080,
