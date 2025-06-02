@@ -545,6 +545,12 @@ class So100RobotConfig(ManipulatorRobotConfig):
                 width=1920,
                 height=1080,
             ),
+            "pi": OpenCVCameraConfig(
+                camera_index="http://<raspberry_pi_ip>:8080/?action=stream",
+                fps=30,
+                width=1920,
+                height=1080,
+            ),
         }
     )
 
@@ -603,10 +609,10 @@ class LeKiwiRobotConfig(RobotConfig):
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
             "front": OpenCVCameraConfig(
-                camera_index="/dev/video0", fps=30, width=640, height=480, rotation=90
+                camera_index="0", fps=30, width=640, height=480, rotation=90
             ),
             "wrist": OpenCVCameraConfig(
-                camera_index="/dev/video2", fps=30, width=640, height=480, rotation=180
+                camera_index="1", fps=30, width=640, height=480, rotation=180
             ),
         }
     )
